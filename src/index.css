@@ -42,34 +42,12 @@ main h1 {
   background-color: #4e5dff;
 }
 
-.dropdown-con {
-  position: relative;
-  background-color: #999aa1;
+.add-task-all-con select {
+  width: 150px;
+  padding-block: 10px;
+  background-color: #9596a8;
   border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 18px;
-  width: 150px;
-  padding: 10px 5px;
-  cursor: pointer;
-}
-
-.view-content-con {
-  position: absolute;
-  top: -10px;
-  right: 50%;
-  translate: 50% 50%;
-  width: 150px;
-  background-color: #999aa1;
-  border: 2px solid #000;
-}
-
-.view-content-con p {
-  padding: 5px;
-}
-.view-content-con p:hover {
-  background-color: #4e5dff;
+  font-size: 16px;
 }
 
 /* ======== */
@@ -114,10 +92,14 @@ main h1 {
   margin-left: 8px;
   border-radius: 5px;
   cursor: pointer;
+  transition: ease 1s all;
 }
-.delete:hover,
+.delete:hover {
+  background-color: rgb(182, 25, 25);
+  color: #fff;
+}
 .edit:hover {
-  background-color: #b5b5b8;
+  background-color: #888894;
 }
 
 /* ======== */
@@ -187,54 +169,18 @@ main h1 {
 
 .status-con {
   width: 100%;
-  /* border: 2px solid red; */
 }
 
 .status-con p {
   font-size: 20px;
-  /* margin-block: 10px; */
+  margin-block: 20px 5px;
 }
 
-.status-con p {
-  /* margin-block: 20px 5px; */
-}
-
-.status-incomp-con {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.status-con select {
   width: 100%;
   padding-block: 10px;
-}
-
-.status-dropdown-sect {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color: #fff;
-  padding-inline: 10px;
+  font-size: 16px;
   border-radius: 5px;
-  cursor: pointer;
-  box-shadow: 0px 0px 36px 0px rgba(0, 0, 0, 0.1);
-}
-
-.dropdown-content {
-  background-color: #fff;
-  width: 100%;
-  position: absolute;
-  top: 45px;
-  z-index: 1;
-  border: 0.5px solid black;
-}
-
-.dropdown-content p {
-  padding-inline: 15px;
-}
-
-.dropdown-content p:hover {
-  background-color: #4e5dff;
 }
 
 .task-btn {

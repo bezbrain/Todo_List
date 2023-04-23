@@ -1,57 +1,91 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import DisplayTodo from "./DisplayTodo";
 import TypeTodo from "./TypeTodo";
 import { FaAngleDown } from "react-icons/fa";
 
-const data = {
-  title: "",
-  timeDate: "",
-};
-
 function Interface() {
-  const currentDate = new Date();
-  const timeAndDate = currentDate.toLocaleString();
-  const [allList, setAllList] = useState(false); //To toggle the 'All' dropdown
-  const [addTask, setAddTask] = useState(false); // To toggle 'Add Task' popup
-  const [dropdown, setDropdown] = useState(false); // Popup dropdown
-  const [displayTitle, setDisplayTitle] = useState("");
-  const [timeDate, setTimeDate] = useState("");
-  const [objTodo, setObjTodo] = useState(data);
-  const [pushToArr, setPushToArr] = useState([]);
-
-  const showAllList = () => {
-    setAllList(!allList);
+  const data = {
+    id: "",
+    title: "",
+    timeDate: new Date().toLocaleString(),
+    opt: "",
   };
 
+  const [addTask, setAddTask] = useState(false); // To toggle 'Add Task' popup
+  const [objTodo, setObjTodo] = useState(data);
+  const [pushToArr, setPushToArr] = useState(
+    JSON.parse(localStorage.getItem("todoArr")) || []
+  );
+  const [selectDropdown, setSelectedDropdown] = useState("");
+  const [check, setCheck] = useState(false);
+  // const [checkIndex, setCheckIndex] = useState(null);
+  const { title, timeDate, opt } = objTodo;
+
+  /*========*/
+  // Click to show popup
   const popUpTask = () => {
     setAddTask(true);
   };
 
-  const changleValue = (e) => {
-    setDisplayTitle(e.target.value);
+  /*========*/
+  // Collect the value of title input
+  const changeValue = (e) => {
     setObjTodo({
       ...objTodo,
-      title: displayTitle,
-      timeDate: timeDate,
+      id: new Date().getTime().toString(),
+      [e.target.name]: e.target.value,
     });
   };
 
-  const handleAddTask = () => {
-    // setTimeDate(timeAndDate);
-    if (displayTitle) {
-      setPushToArr([...pushToArr, objTodo]);
-      setAddTask(false);
-      setDisplayTitle("");
+  /*========*/
+  // Click to add the Task
+  const handleAddTask = (index) => {
+    if (!title) {
+      console.log("Title cannot be empty"); // Error code
+      return;
+    }
+    if (opt === "") {
+      console.log("Select an option"); // Error code
+      return;
+    }
+    setPushToArr([...pushToArr, objTodo]);
+    setAddTask(false);
+    setObjTodo(data);
+    setSelectedDropdown("");
+    console.log(objTodo);
+    if (opt === "incomplete") {
+      setCheck(false);
     } else {
-      console.log("Title cannot be empty");
+      setCheck(true);
     }
   };
 
+  /*========*/
+  // Change the popup dropdown
+  const handleStatusDropdown = (e) => {
+    setSelectedDropdown(e.target.value);
+    console.log(e.target.value);
+  };
+
   useEffect(() => {
-    setTimeDate(timeAndDate);
-    console.log(objTodo);
-    console.log(pushToArr);
+    localStorage.setItem("todoArr", JSON.stringify(pushToArr)); //Send to local Storage
   }, [pushToArr]);
+
+  useEffect(() => {
+    setObjTodo({
+      ...objTodo,
+      opt: selectDropdown,
+    });
+  }, [selectDropdown]);
+
+  /*========*/
+  // Delete Todo
+  const handleDelete = (count) => {
+    const newPushToArr = pushToArr.filter((each) => {
+      return each.id !== count;
+    });
+    setPushToArr(newPushToArr);
+  };
 
   return (
     <>
@@ -61,27 +95,23 @@ function Interface() {
           <button className="add-task-btn" onClick={popUpTask}>
             Add Task
           </button>
-          <div className="dropdown-con" onClick={showAllList}>
-            <p>All</p>
-            <FaAngleDown />
-            {allList && (
-              <div className="view-content-con">
-                <p>All</p>
-                <p>Incomplete</p>
-                <p>Complete</p>
-              </div>
-            )}
-          </div>
+          <select name="" id="">
+            <option value="">All</option>
+            <option value="">Incomplete</option>
+            <option value="">Complete</option>
+          </select>
         </div>
-        <DisplayTodo displayInputTodo={pushToArr} />
+        <DisplayTodo
+          displayInputTodo={pushToArr}
+          clickDelete={handleDelete} /*inputCheck={check}*/
+        />
         {addTask && (
           <TypeTodo
-            drop={dropdown}
-            openDropdown={() => setDropdown(!dropdown)}
             removePopUp={() => setAddTask(false)}
-            titleInput={displayTitle}
-            titleValue={changleValue}
+            titleInput={title}
+            titleValue={changeValue}
             addTask={handleAddTask}
+            handledropdown={handleStatusDropdown}
           />
         )}
       </main>
