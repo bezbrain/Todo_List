@@ -79,7 +79,7 @@ function Interface() {
   }, [selectDropdown]);
 
   /*========*/
-  // Delete Todo
+  // Delete Todo item
   const handleDelete = (count) => {
     const newPushToArr = pushToArr.filter((each) => {
       return each.id !== count;
