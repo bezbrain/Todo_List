@@ -86,8 +86,7 @@ main h1 {
 }
 @media screen and (max-width: 500px) {
   .todo-name-and-time-con {
-    border: 2px solid red;
-    width: 50%;
+    width: 55%;
   }
 }
 
