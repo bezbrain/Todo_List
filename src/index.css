@@ -211,3 +211,10 @@ main h1 {
   background-color: red;
   color: #fff;
 }
+
+@media screen and (max-width: 500px) {
+  .type-todo-con {
+    /* width: 100%; */
+    width: 300px;
+  }
+}
