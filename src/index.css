@@ -84,6 +84,12 @@ main h1 {
 .todo-name-and-time-con {
   width: 75%;
 }
+@media screen and (max-width: 500px) {
+  .todo-name-and-time-con {
+    border: 2px solid red;
+    width: 50%;
+  }
+}
 
 .delete,
 .edit {
@@ -214,7 +220,6 @@ main h1 {
 
 @media screen and (max-width: 500px) {
   .type-todo-con {
-    /* width: 100%; */
     width: 300px;
   }
 }
